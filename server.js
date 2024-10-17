@@ -1,23 +1,31 @@
 const express = require('express');
-const mongoose= require('mongoose');
-const app = express();
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const cors = require('cors');
 const authRoutes = require('./routes/auth');
 const protectedRoutes = require('./routes/protectedRoute');
 
-require('dotenv').config()
-mongoose.connect('mongodb://localhost:27017/dummyDB',
-    { useNewUrlParser: true, useUnifiedTopology: true }
-)
-.then(()=> console.log('MongoDB Connected...'))
-.catch(err => console.log(err));
-app.use(express.json());
-app.use('/api/auth', authRoutes); 
-app.use('/api', protectedRoutes);  
+dotenv.config(); 
 
+const app = express();
+app.use(express.json()); 
+app.use(cors());
+
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log('MongoDB Connected...'))
+.catch(err => console.log(err));
+
+// Define Routes
+app.use('/api/auth', authRoutes); 
+app.use('/api/admin', protectedRoutes);  
+
+// Test Route
 app.get('/test', (req, res) => {
     res.send('Test route works!');
 });
-
 
 // Start server
 const PORT = process.env.PORT || 3000;
