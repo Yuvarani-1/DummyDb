@@ -1,4 +1,3 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -13,10 +12,8 @@ function Login() {
         try {
             const response = await axios.post('http://localhost:3000/api/auth/login', { name, password });
 
-            // Save the token to local storage
             localStorage.setItem('token', response.data.token);
 
-            // Redirect to Admin Dashboard
             navigate('/admin');
         } catch (err) {
             console.error(err);
