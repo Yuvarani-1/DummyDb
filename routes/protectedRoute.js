@@ -2,6 +2,7 @@ const express = require('express');
 const User = require('../models/User');
 const router = express.Router();
 
+<<<<<<< HEAD
 // Middleware to check if user is admin
 const isAdmin = (req, res, next) => {
   if (req.user && req.user.role === 'admin') {
@@ -21,6 +22,10 @@ router.get('/users', isAdmin, async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server error');
   }
+=======
+router.get('/admin',(req, res) => {
+  res.json({ msg: 'Welcome, Admin!' });
+>>>>>>> c5a43e384b59905803bde11e39790e8ae5e3d4d4
 });
 
 // @route   PUT /api/admin/users/:id
